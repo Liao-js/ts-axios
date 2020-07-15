@@ -62,13 +62,8 @@ registerExtendRouter()
 
 registerInterceptorRouter()
 
-  <<
-  << << < HEAD
 registerConfigRouter()
 
-  ===
-  === = >>>
-  >>> > f858d93d6cd53f66f3229c34352b45ba69a277ac
 app.use(router)
 
 const port = process.env.PORT || 8081

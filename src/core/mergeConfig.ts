@@ -56,11 +56,7 @@ export default function mergeConfig(config1: AxiosRequestConfig, config2?: Axios
   }
 
   function mergeField(key: string): void {
-<<<<<<< HEAD
     const strat = strats[key] || defaultStrat
-=======
-    const strat = strats[key] || defaultStart
->>>>>>> f858d93d6cd53f66f3229c34352b45ba69a277ac
     config[key] = strat(config1[key], config2![key])
   }
 
