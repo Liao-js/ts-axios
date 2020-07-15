@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import { isPlainObject, deepMerge } from "./util";
 import { Method } from "../types";
+=======
+import { isPlainObject } from "./util";
+>>>>>>> f858d93d6cd53f66f3229c34352b45ba69a277ac
 
 function normalizeHeaderName(headers: any, normalizedName: string): void {
   if (!headers) {

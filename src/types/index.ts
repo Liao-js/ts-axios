@@ -14,13 +14,19 @@ export interface AxiosRequestConfig {
   headers?: any
   responseType?: XMLHttpRequestResponseType
   timeout?: number
+<<<<<<< HEAD
   transformRequest?: AxiosTransformer | AxiosTransformer[]
   transformResponse?: AxiosTransformer | AxiosTransformer[]
+=======
+>>>>>>> f858d93d6cd53f66f3229c34352b45ba69a277ac
 
   [propName: string]: any
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> f858d93d6cd53f66f3229c34352b45ba69a277ac
 export interface AxiosResponse<T = any> {
   data: T
   status: number
