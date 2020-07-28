@@ -1,4 +1,4 @@
-import { isData, isPlainObject, isURLSearchParams } from './util'
+import { isDate, isPlainObject, isURLSearchParams } from './util'
 
 interface URLOrigin {
   protocol: string
@@ -43,7 +43,7 @@ export function buildURL(url: string, params?: any, paramsSerializer?: (params: 
         values = [val]
       }
       values.forEach((val) => {
-        if (isData(val)) {
+        if (isDate(val)) {
           val = val.toISOString()
         } else if (isPlainObject(val)) {
           val = JSON.stringify(val)
@@ -56,9 +56,9 @@ export function buildURL(url: string, params?: any, paramsSerializer?: (params: 
   }
 
   if (serializedParams) {
-    const marIndex = url.indexOf('#')
-    if (marIndex !== -1) {
-      url.slice(0, marIndex)
+    const markIndex = url.indexOf('#')
+    if (markIndex !== -1) {
+      url = url.slice(0, markIndex)
     }
     url += (url.indexOf('?') === -1 ? '?' : '&') + serializedParams
   }
@@ -66,7 +66,7 @@ export function buildURL(url: string, params?: any, paramsSerializer?: (params: 
 }
 
 export function isAbsoluteURL(url: string): boolean {
-  return /(^[a-z][a-z\d+\-\.]*:)?\/\//i.test(url)
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
 }
 
 export function combineURL(baseURL: string, relativeURL?: string): string {
