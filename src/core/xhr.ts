@@ -1,9 +1,9 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
-import { parseHeaders } from "../helpers/headers";
-import { createError } from "../helpers/error";
-import { isURLSameOrigin } from '../helpers/url';
-import { isFormData } from "../helpers/util";
-import cookie from '../helpers/cookie';
+import { parseHeaders } from '../helpers/headers'
+import { createError } from '../helpers/error'
+import { isURLSameOrigin } from '../helpers/url'
+import { isFormData } from '../helpers/util'
+import cookie from '../helpers/cookie'
 
 export default function xhr(config: AxiosRequestConfig): AxiosPromise {
   return new Promise((resolve, reject) => {
@@ -11,7 +11,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       data = null,
       url,
       method = 'get',
-      headers,
+      headers = {},
       responseType,
       timeout,
       cancelToken,
@@ -50,7 +50,6 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if (withCredentials) {
         request.withCredentials = withCredentials
       }
-
     }
 
     function addEvents(): void {
@@ -109,7 +108,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         headers['Authorization'] = 'Basic ' + btoa(auth.username + ':' + auth.password)
       }
 
-      Object.keys(headers).forEach((name) => {
+      Object.keys(headers).forEach(name => {
         if (data === null && name.toLowerCase() === 'content-type') {
           delete headers[name]
         } else {
@@ -131,9 +130,16 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       if (!validateStatus || validateStatus(response.status)) {
         resolve(response)
       } else {
-        reject(createError(`Request failed with status code ${response.status}`, config, null, request, response))
+        reject(
+          createError(
+            `Request failed with status code ${response.status}`,
+            config,
+            null,
+            request,
+            response
+          )
+        )
       }
     }
-
   })
 }
