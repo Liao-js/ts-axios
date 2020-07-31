@@ -1,4 +1,4 @@
-import axios, { AxiosResponse, AxiosError } from "../src/index";
+import axios, { AxiosResponse, AxiosError } from '../src/index'
 import { getAjaxRequest } from './helper'
 
 describe('requests', () => {
@@ -246,20 +246,54 @@ describe('requests', () => {
   test('should allow overriding Content-Type header case-insensitive', () => {
     let response: AxiosResponse
 
-    axios.post(
-      '/foo',
-      { prop: 'value' },
-      {
-        headers: {
-          'content-type': 'application/json'
+    axios
+      .post(
+        '/foo',
+        { prop: 'value' },
+        {
+          headers: {
+            'content-type': 'application/json'
+          }
         }
-      }
-    ).then(res => {
-      response = res
-    })
+      )
+      .then(res => {
+        response = res
+      })
 
     return getAjaxRequest().then(request => {
       expect(request.requestHeaders['Content-Type']).toBe('application/json')
+    })
+  })
+
+  test('should support array buffer response', done => {
+    let response: AxiosResponse
+
+    function str2ab(str: string) {
+      const buff = new ArrayBuffer(str.length * 2)
+      const view = new Uint16Array(buff)
+      for (let i = 0; i < str.length; i++) {
+        view[i] = str.charCodeAt(i)
+      }
+      return buff
+    }
+
+    axios('/foo', {
+      responseType: 'arraybuffer'
+    }).then(data => {
+      response = data
+    })
+
+    getAjaxRequest().then(request => {
+      request.respondWith({
+        status: 200,
+        //@ts-ignore
+        response: str2ab('Hello world')
+      })
+
+      setTimeout(() => {
+        expect(response.data.byteLength).toBe(22)
+        done()
+      }, 100)
     })
   })
 })
